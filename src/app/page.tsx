@@ -13,12 +13,12 @@ const translations = {
     start: 'Get Started',
     explore: 'Explore EURO CONNECT',
     categories: [
-      ['💼', 'Find Jobs', 'Discover jobs across Europe.'],
-      ['🏠', 'Find Housing', 'Search rooms and apartments.'],
-      ['🛍️', 'Marketplace', 'Buy and sell within your community.'],
-      ['👥', 'Community', 'Meet people and make connections.'],
-      ['🤝', 'Local Services', 'Find helpful services nearby.'],
-      ['💬', 'Messaging', 'Stay connected with others.'],
+      { icon: '💼', title: 'Find Jobs', description: 'Discover jobs across Europe.', href: '/jobs' },
+      { icon: '🏠', title: 'Find Housing', description: 'Search rooms and apartments.', href: '/housing' },
+      { icon: '🛍️', title: 'Marketplace', description: 'Buy and sell within your community.', href: '/marketplace' },
+      { icon: '👥', title: 'Community', description: 'Meet people and make connections.', href: '/community' },
+      { icon: '🤝', title: 'Local Services', description: 'Find helpful services nearby.', href: '/services' },
+      { icon: '💬', title: 'Messaging', description: 'Stay connected with others.', href: '/messages' },
     ],
   },
   it: {
@@ -30,12 +30,12 @@ const translations = {
     start: 'Inizia ora',
     explore: 'Esplora EURO CONNECT',
     categories: [
-      ['💼', 'Trova lavoro', 'Scopri offerte di lavoro in Europa.'],
-      ['🏠', 'Trova alloggio', 'Cerca camere e appartamenti.'],
-      ['🛍️', 'Mercatino', 'Compra e vendi nella tua comunità.'],
-      ['👥', 'Comunità', 'Conosci persone e crea connessioni.'],
-      ['🤝', 'Servizi locali', 'Trova servizi utili nelle vicinanze.'],
-      ['💬', 'Messaggi', 'Resta in contatto con gli altri.'],
+      { icon: '💼', title: 'Trova lavoro', description: 'Scopri offerte di lavoro in Europa.', href: '/jobs' },
+      { icon: '🏠', title: 'Trova alloggio', description: 'Cerca camere e appartamenti.', href: '/housing' },
+      { icon: '🛍️', title: 'Mercatino', description: 'Compra e vendi nella tua comunità.', href: '/marketplace' },
+      { icon: '👥', title: 'Comunità', description: 'Conosci persone e crea connessioni.', href: '/community' },
+      { icon: '🤝', title: 'Servizi locali', description: 'Trova servizi utili nelle vicinanze.', href: '/services' },
+      { icon: '💬', title: 'Messaggi', description: 'Resta in contatto con gli altri.', href: '/messages' },
     ],
   },
   bn: {
@@ -47,12 +47,12 @@ const translations = {
     start: 'শুরু করুন',
     explore: 'EURO CONNECT ঘুরে দেখুন',
     categories: [
-      ['💼', 'চাকরি খুঁজুন', 'ইউরোপজুড়ে চাকরি খুঁজুন।'],
-      ['🏠', 'বাসস্থান খুঁজুন', 'রুম ও অ্যাপার্টমেন্ট খুঁজুন।'],
-      ['🛍️', 'মার্কেটপ্লেস', 'কেনাবেচা করুন।'],
-      ['👥', 'কমিউনিটি', 'নতুন মানুষের সঙ্গে পরিচিত হোন।'],
-      ['🤝', 'স্থানীয় সার্ভিস', 'কাছাকাছি প্রয়োজনীয় সার্ভিস খুঁজুন।'],
-      ['💬', 'মেসেজিং', 'অন্যদের সঙ্গে যোগাযোগ রাখুন।'],
+      { icon: '💼', title: 'চাকরি খুঁজুন', description: 'ইউরোপজুড়ে চাকরি খুঁজুন।', href: '/jobs' },
+      { icon: '🏠', title: 'বাসস্থান খুঁজুন', description: 'রুম ও অ্যাপার্টমেন্ট খুঁজুন।', href: '/housing' },
+      { icon: '🛍️', title: 'মার্কেটপ্লেস', description: 'কেনাবেচা করুন।', href: '/marketplace' },
+      { icon: '👥', title: 'কমিউনিটি', description: 'নতুন মানুষের সঙ্গে পরিচিত হোন।', href: '/community' },
+      { icon: '🤝', title: 'স্থানীয় সার্ভিস', description: 'কাছাকাছি প্রয়োজনীয় সার্ভিস খুঁজুন।', href: '/services' },
+      { icon: '💬', title: 'মেসেজিং', description: 'অন্যদের সঙ্গে যোগাযোগ রাখুন।', href: '/messages' },
     ],
   },
 }
@@ -62,12 +62,11 @@ export default function HomePage() {
   const t = translations[language]
 
   useEffect(() => {
-  const savedLanguage = localStorage.getItem('euro-connect-language')
-
-  if (savedLanguage === 'en' || savedLanguage === 'it' || savedLanguage === 'bn') {
-    setLanguage(savedLanguage)
-  }
-}, [])
+    const savedLanguage = localStorage.getItem('euro-connect-language')
+    if (savedLanguage === 'en' || savedLanguage === 'it' || savedLanguage === 'bn') {
+      setLanguage(savedLanguage)
+    }
+  }, [])
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -80,11 +79,11 @@ export default function HomePage() {
           <div className="flex items-center gap-4">
             <select
               value={language}
-             onChange={(e) => {
-  const selectedLanguage = e.target.value as 'en' | 'it' | 'bn'
-  setLanguage(selectedLanguage)
-  localStorage.setItem('euro-connect-language', selectedLanguage)
-}}
+              onChange={(e) => {
+                const selectedLanguage = e.target.value as 'en' | 'it' | 'bn'
+                setLanguage(selectedLanguage)
+                localStorage.setItem('euro-connect-language', selectedLanguage)
+              }}
               className="border rounded-lg px-3 py-2 text-gray-800"
               aria-label="Select language"
             >
@@ -134,15 +133,16 @@ export default function HomePage() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {t.categories.map(([icon, title, description]) => (
-            <div
-              key={title}
-              className="bg-white p-7 rounded-2xl shadow-sm border"
+          {t.categories.map((item) => (
+            <Link
+              key={item.title}
+              href={item.href}
+              className="bg-white p-7 rounded-2xl shadow-sm border hover:shadow-md transition block"
             >
-              <div className="text-4xl mb-4">{icon}</div>
-              <h3 className="text-xl font-bold mb-2">{title}</h3>
-              <p className="text-gray-600">{description}</p>
-            </div>
+              <div className="text-4xl mb-4">{item.icon}</div>
+              <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+              <p className="text-gray-600">{item.description}</p>
+            </Link>
           ))}
         </div>
       </section>
