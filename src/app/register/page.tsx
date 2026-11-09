@@ -1,3 +1,4 @@
+
 'use client'
 
 import { useState } from 'react'
@@ -10,34 +11,49 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
+  const [success, setSuccess] = useState(false)
 
   async function handleRegister(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setLoading(true)
     setMessage('')
+    setSuccess(false)
 
-    const supabase = createClient()
+    try {
+      const supabase = createClient()
 
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: name,
-          preferred_language: 'en',
+      const { data, error } = await supabase.auth.signUp({
+        email: email.trim(),
+        password,
+        options: {
+          data: {
+            full_name: name.trim(),
+            preferred_language: 'en',
+          },
         },
-      },
-    })
+      })
 
-    if (error) {
-      setMessage(error.message)
-    } else {
+      if (error) throw error
+
+      if (data.user) {
+        setSuccess(true)
+        setMessage(
+          data.session
+            ? 'Your account has been created successfully! You can now log in.'
+            : 'Registration successful! Please check your email to confirm your account.'
+        )
+      } else {
+        throw new Error('Registration could not be completed. Please try again.')
+      }
+    } catch (error) {
       setMessage(
-        'Registration successful! Please check your email to confirm your account.'
+        error instanceof Error
+          ? error.message
+          : 'Something went wrong. Please try again.'
       )
+    } finally {
+      setLoading(false)
     }
-
-    setLoading(false)
   }
 
   return (
@@ -94,7 +110,12 @@ export default function RegisterPage() {
         </form>
 
         {message && (
-          <p className="mt-4 text-center text-sm text-blue-700">
+          <p
+            role="status"
+            className={`mt-4 text-center text-sm ${
+              success ? 'text-green-700' : 'text-red-600'
+            }`}
+          >
             {message}
           </p>
         )}
